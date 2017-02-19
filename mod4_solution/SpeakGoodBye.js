@@ -20,6 +20,12 @@
 	  console.log(speakWord + " " + name);
 	}
 
+	// Part 2A: Add another method called speakSimple that should simply return 
+	// the greeting concatenated to the passed in name argument
+	byeSpeaker.speakSimple = function(name) {
+		return speakWord + " " + name;
+	}
+
 	// STEP 9: Expose the 'byeSpeaker' object to the global scope. Name it
 	// 'byeSpeaker' on the global scope as well.
 	window.byeSpeaker = byeSpeaker;

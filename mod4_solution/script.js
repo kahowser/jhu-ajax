@@ -42,6 +42,10 @@ WARNING!!! WARNING!!!
   // using the 'speak' method or either helloSpeaker's or byeSpeaker's
   // 'speak' method.
   // See Lecture 50, part 1
+  
+  // Added log message for clarity
+  console.log("Part 1:");
+  
   for (var i=0; i < names.length; i++) {
 
     // STEP 11:
@@ -63,4 +67,58 @@ WARNING!!! WARNING!!!
       helloSpeaker.speak(names[i]);
     }
   }
+
+  // Part 2B: Use the map function to create an array based on the names array. 
+  // This array will contain the greetings based on the names with the same 
+  // rules as implemented previously. The function passed into the map function 
+  // should not be an inline function, i.e., separate it into its own named 
+  // function and pass it into the map function as a value.
+  
+  // Added log message for clarity
+  console.log("Part 2:");
+
+  function generateSpeakSimpleArray(name) {
+    var message = "";
+    if(name.charAt(0).toLowerCase() == 'j') {
+      message = byeSpeaker.speakSimple(name);
+    } else {
+      message = helloSpeaker.speakSimple(name);
+    }
+    return message;
+  }
+  
+  var speakSimpleArray = names.map(generateSpeakSimpleArray);
+
+  for (i=0; i < speakSimpleArray.length; i++) {
+    console.log(speakSimpleArray[i]);
+  }
+
+
+  // Part 3 (Bonus): use the reduce function to create 2 separate arrays: 
+  // one with all the ‘hello’ greetings and another with all the good bye 
+  // greetings. Then, loop over each array (obviously separately) and print 
+  // out the greetings to the console with console.log 
+  
+  // Added log message for clarity
+  console.log("Part 3:");
+
+  function reduceNames(lists, name) {
+    if(name.charAt(0).toLowerCase() == 'j') {
+      lists.bye.push(byeSpeaker.speakSimple(name));
+    } else {
+      lists.hello.push(helloSpeaker.speakSimple(name));
+    }
+    return lists;
+  }
+  
+  var geetings = names.reduce(reduceNames, {hello: [], bye: []});
+
+  for (i=0; i < geetings.hello.length; i++) {
+    console.log(geetings.hello[i]);
+  }
+
+  for (i=0; i < geetings.bye.length; i++) {
+    console.log(geetings.bye[i]);
+  }
+
 })();
