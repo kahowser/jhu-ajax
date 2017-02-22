@@ -43,9 +43,6 @@ WARNING!!! WARNING!!!
   // 'speak' method.
   // See Lecture 50, part 1
   
-  // Added log message for clarity
-  console.log("Part 1:");
-  
   for (var i=0; i < names.length; i++) {
 
     // STEP 11:
@@ -74,9 +71,6 @@ WARNING!!! WARNING!!!
   // should not be an inline function, i.e., separate it into its own named 
   // function and pass it into the map function as a value.
   
-  // Added log message for clarity
-  console.log("Part 2:");
-
   function generateSpeakSimpleArray(name) {
     var message = "";
     if(name.charAt(0).toLowerCase() == 'j') {
@@ -99,9 +93,6 @@ WARNING!!! WARNING!!!
   // greetings. Then, loop over each array (obviously separately) and print 
   // out the greetings to the console with console.log 
   
-  // Added log message for clarity
-  console.log("Part 3:");
-
   function reduceNames(lists, name) {
     if(name.charAt(0).toLowerCase() == 'j') {
       lists.bye.push(byeSpeaker.speakSimple(name));
