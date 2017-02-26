@@ -362,6 +362,11 @@ function buildAboutViewHtml(aboutHtml) {
                    "classX",
                    "fa fa-star-o");
 
+  aboutHtml =
+    insertProperty(aboutHtml,
+                   "rating",
+                   rating);
+
   return aboutHtml;
 }
 
