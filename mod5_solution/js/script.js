@@ -22,6 +22,7 @@ var menuItemsUrl =
   "https://davids-restaurant.herokuapp.com/menu_items.json?category=";
 var menuItemsTitleHtml = "snippets/menu-items-title.html";
 var menuItemHtml = "snippets/menu-item.html";
+var aboutHtml = "snippets/about-snippet.html";
 
 // Convenience function for inserting innerHTML for 'select'
 var insertHtml = function (selector, html) {
@@ -42,6 +43,13 @@ var insertProperty = function (string, propName, propValue) {
   var propToReplace = "{{" + propName + "}}";
   string = string
     .replace(new RegExp(propToReplace, "g"), propValue);
+  return string;
+};
+
+var insertPropertyOnce = function (string, propName, propValue) {
+  var propToReplace = "{{" + propName + "}}";
+  string = string
+    .replace(new RegExp(propToReplace), propValue);
   return string;
 };
 
@@ -137,6 +145,14 @@ function chooseRandomCategory (categories) {
   return categories[randomArrayIndex];
 }
 
+// Returns a random number between 1 and 5.
+function chooseRandomRating () {
+  // Choose a random number from 1 to 5 inclusively.
+  var randomRating = Math.floor(Math.random() * 5) + 1;
+
+  // return random rating
+  return randomRating;
+}
 
 // Load the menu categories view
 dc.loadMenuCategories = function () {
@@ -154,6 +170,12 @@ dc.loadMenuItems = function (categoryShort) {
   $ajaxUtils.sendGetRequest(
     menuItemsUrl + categoryShort,
     buildAndShowMenuItemsHTML);
+};
+
+// Load the about view
+dc.loadAbout = function () {
+  showLoading("#main-content");
+  buildAndShowAboutHTML();
 };
 
 
@@ -238,6 +260,19 @@ function buildAndShowMenuItemsHTML (categoryMenuItems) {
     false);
 }
 
+// Builds HTML for the about page
+function buildAndShowAboutHTML() {
+  // Retrieve about snippet
+  $ajaxUtils.sendGetRequest(
+    aboutHtml,
+    function (aboutHtml) {
+      // modify the about snippet
+      var aboutViewHtml =
+            buildAboutViewHtml(aboutHtml);
+      insertHtml("#main-content", aboutViewHtml);
+    },
+    false);
+}
 
 // Using category and menu items data and snippets html
 // build menu items view HTML to be inserted into page
@@ -307,6 +342,28 @@ function buildMenuItemsViewHtml(categoryMenuItems,
   return finalHtml;
 }
 
+// Build about view HTML to be inserted into page
+function buildAboutViewHtml(aboutHtml) {
+
+  // Get a random rating
+  var rating = chooseRandomRating();
+
+  // Fill in a start for each star in the rating
+  for (var i = 0; i < rating; i++) {
+    aboutHtml = 
+      insertPropertyOnce(aboutHtml,
+                         "classX",
+                         "fa fa-star");
+  }
+
+  // Set the remaining spans to empty stars
+  aboutHtml =
+    insertProperty(aboutHtml,
+                   "classX",
+                   "fa fa-star-o");
+
+  return aboutHtml;
+}
 
 // Appends price with '$' if price exists
 function insertItemPrice(html,
