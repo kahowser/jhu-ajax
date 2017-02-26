@@ -94,6 +94,13 @@ var switchAboutToActive = function () {
   }
 };
 
+// On page resize, if on the About page, resize main content height
+window.addEventListener("resize", function () {
+  if($('#navAboutButton').hasClass('active')) {
+    resizeMainContent();
+  }
+});
+
 // On page load (before images or CSS)
 document.addEventListener("DOMContentLoaded", function (event) {
 
@@ -200,6 +207,8 @@ dc.loadMenuItems = function (categoryShort) {
 
 // Load the about view
 dc.loadAbout = function () {
+  // Resize the main content height, this keeps the div tall enough
+  resizeMainContent();
   showLoading("#main-content");
   buildAndShowAboutHTML();
 };
@@ -397,6 +406,46 @@ function buildAboutViewHtml(aboutHtml) {
 
   return aboutHtml;
 }
+
+// Resize the height of main content div so the footer doesn't float up
+var resizeMainContent = function() {
+  // Set min-height of main-content to be the
+  // height of the window minus the height of all
+  // the other elements    
+  var minHeight = $(window).height() 
+    - calcHeight("header") 
+    - calcHeight("footer")
+    - calcHeight("#main-content")
+    - calcHeight("#call-btn")
+    - calcHeight("#xs-deliver")
+    - 19; //for the navbar default margin bottom not picked up by the footer height
+  
+  // If the min-hieght is negative just set it to 0
+  if(minHeight < 0) {
+    minHeight=0;
+  }
+  
+  // Update the min-height for te main-content div
+  $("#main-content").css("min-height", minHeight);
+};
+
+// Calulate the hieght of an element given a selector
+var calcHeight = function(selector) {
+  var height = 0;
+  
+  // We dont want to use the current height of the main content we are changing
+  if(selector != "#main-content") {
+    height += $(selector).height(); 
+  }
+  
+  // Add the hieght of the margins and padding
+  height += parseFloat($(selector).css("padding-top")) 
+    + parseFloat($(selector).css("padding-bottom"))
+    + parseFloat($(selector).css("margin-top"))
+    + parseFloat($(selector).css("margin-bottom"));
+
+  return height;
+};
 
 // Appends price with '$' if price exists
 function insertItemPrice(html,
