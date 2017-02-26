@@ -53,18 +53,44 @@ var insertPropertyOnce = function (string, propName, propValue) {
   return string;
 };
 
-// Remove the class 'active' from home and switch to Menu button
+// Remove the class 'active' from home & about and switch to Menu button
 var switchMenuToActive = function () {
   // Remove 'active' from home button
   var classes = document.querySelector("#navHomeButton").className;
   classes = classes.replace(new RegExp("active", "g"), "");
   document.querySelector("#navHomeButton").className = classes;
 
+  // Remove 'active' from about button
+  var classes = document.querySelector("#navAboutButton").className;
+  classes = classes.replace(new RegExp("active", "g"), "");
+  document.querySelector("#navAboutButton").className = classes;
+
   // Add 'active' to menu button if not already there
   classes = document.querySelector("#navMenuButton").className;
   if (classes.indexOf("active") === -1) {
     classes += " active";
     document.querySelector("#navMenuButton").className = classes;
+  }
+};
+
+// Remove the class 'active' from home & menu and switch to About button
+var switchAboutToActive = function () {
+  // Remove 'active' from home button
+  var classes = document.querySelector("#navHomeButton").className;
+  classes = classes.replace(new RegExp("active", "g"), "");
+  document.querySelector("#navHomeButton").className = classes;
+
+  // Remove 'active' from menu button
+  var classes = document.querySelector("#navMenuButton").className;
+  classes = classes.replace(new RegExp("active", "g"), "");
+  document.querySelector("#navMenuButton").className = classes;
+
+
+  // Add 'active' to about button if not already there
+  classes = document.querySelector("#navAboutButton").className;
+  if (classes.indexOf("active") === -1) {
+    classes += " active";
+    document.querySelector("#navAboutButton").className = classes;
   }
 };
 
@@ -266,6 +292,8 @@ function buildAndShowAboutHTML() {
   $ajaxUtils.sendGetRequest(
     aboutHtml,
     function (aboutHtml) {
+      // Switch CSS class active to about button
+      switchAboutToActive();
       // modify the about snippet
       var aboutViewHtml =
             buildAboutViewHtml(aboutHtml);
@@ -348,7 +376,7 @@ function buildAboutViewHtml(aboutHtml) {
   // Get a random rating
   var rating = chooseRandomRating();
 
-  // Fill in a start for each star in the rating
+  // Fill in a star for each star in the rating
   for (var i = 0; i < rating; i++) {
     aboutHtml = 
       insertPropertyOnce(aboutHtml,
