@@ -48,20 +48,28 @@
       Added validation logic to keep user from adding invalid quantities.
     */
     service.buyItem = function (itemIndex) {
-      // Check to make sure the quantity is a number
-      if (!angular.isNumber(toBuy[itemIndex].quantity)) {
+      // Default Error Message to empty string
+      toBuy[itemIndex].errorMessage="";
+
+      // Save off the original quantity before we modify it
+      var quantityString = toBuy[itemIndex].quantity;
+      // Convert string to a number so we can validate it
+      var quantity = Number(quantityString);
+      // Save the generic error so we do not have to retype it.
+      var genericError = "The quantity '" + quantityString + "' is invalid. ";
+
+      // Check to make sure the quantity is valid
+      if (isNaN(quantity)) {
         // Not a number add an error message
-        toBuy[itemIndex].errorMessage="The quantity must be a number!";
-      } else if (!Number.isInteger(toBuy[itemIndex].quantity)) {
+        toBuy[itemIndex].errorMessage = genericError + "It must be a number!";
+      } else if (!Number.isInteger(quantity)) {
+        // You can't buy part of an item
+        toBuy[itemIndex].errorMessage = genericError + "It must be an integer!";
+      } else if (quantity < 1) {
         // Not a positive quantity
-        toBuy[itemIndex].errorMessage="You can't buy part of an item. Quantity must be a whole number!";
-      } else if (toBuy[itemIndex].quantity < 1) {
-        // Not a positive quantity
-        toBuy[itemIndex].errorMessage="The quantity must be at least 1!";
+        toBuy[itemIndex].errorMessage = genericError + "It must be at least 1!";
       } else {
-        // Validation passed, clear error message
-        toBuy[itemIndex].errorMessage="";
-        // Remove item from toBuy list and put on bought list
+        // Validation passed, remove item from toBuy list and put on bought list
         bought.push(toBuy.splice(itemIndex, 1)[0]);
       }
     };
