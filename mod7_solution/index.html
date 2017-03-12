@@ -19,13 +19,19 @@
          <h2>To Buy:</h2>
          <ul>
            <li ng-repeat="item in buylist.items">
-             Buy {{ item.quantity }} {{ item.name }}
+             Buy <input type="number" ng-model="item.quantity"> {{ item.name }}
              <button class="btn btn-default" ng-click="buylist.removeItem($index);">
                <span class="glyphicon glyphicon-ok"></span> Bought
              </button>
+             <div class="text-danger" ng-if='item.errorMessage !== ""'>
+               {{item.errorMessage}}
+             </div>
+             <p>
+             {{Number(item.quantity)}}
+           </p>
            </li>
          </ul>
-         <div class="emptyMessage" ng-if="buylist.items.length < 1">
+         <div class="emptyMessage text-info" ng-if="buylist.items.length < 1">
            Everything is bought!
          </div>
         </div>
@@ -35,9 +41,13 @@
          <h2>Already Bought:</h2>
          <ul>
            <li ng-repeat="item in boughtlist.items">
-             Bought {{ item.quantity }} {{ item.name }}
+             Bought {{ item.quantity }} {{ item.name }} for total price of
+             {{ item.quantity * item.pricePerItem | currency : "$$$$$" : 2}}
+             <div class="text-danger" ng-if='item.errorMessage !== ""'>
+               {{item.errorMessage}}
+             </div>
          </ul>
-         <div class="emptyMessage" ng-if="boughtlist.items.length < 1">
+         <div class="emptyMessage text-info" ng-if="boughtlist.items.length < 1">
            Nothing bought yet.
          </div>
         </div>
