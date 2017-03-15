@@ -60,10 +60,11 @@
 					console.log("Found " + search.found.length + " matching items.");
 				}).catch(function(error) {
 					search.found = [];
-					console.log(error);
+					console.log("ERROR: " + error);
 				})
 			} else {
 				search.found = [];
+				console.log("Search string was empty.");
 			}
 
 		};
@@ -94,7 +95,6 @@
 
 				// Use the custom description filter to narrow down the array to just the items we want
 				foundItems = descriptionFilter(result.data.menu_items, searchTerm);
-				console.log("foundItems length: " + foundItems.length);
 
 		    // return processed items
 		    return foundItems;
