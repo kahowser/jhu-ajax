@@ -1,0 +1,19 @@
+<div class="results">
+  <h4 ng-if="found.length < 1">
+      Nothing found
+  </h4>
+  <div ng-if="found.length > 0">
+    <h4>Matching Menu Items:</h4>
+    <ul>
+      <li ng-repeat="item in found">
+        <span class="name">{{item.name}} ({{item.short_name}})</span>
+        <button class="btn-xs btn-default" ng-click="onRemove({index: $index});">
+          Don't want this one!
+        </button>
+        <div>
+          {{item.description}}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
