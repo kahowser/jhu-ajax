@@ -5,6 +5,7 @@
   .controller('NarrowItDownController', NarrowItDownController)
   .service('MenuSearchService', MenuSearchService)
 	.directive('foundItems', FoundItemsDirective)
+	.filter('description', DescriptionFilterFactory)
 	.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com/menu_items.json");
 
 	function FoundItemsDirective() {
@@ -18,6 +19,24 @@
 
 		return ddo;
 	}
+
+	/*
+		A filter factory function that will return a filter functions that takes
+		an array and looks for a given word in each of it's obects' descriptions
+	*/
+	DescriptionFilterFactory.$inject = ['$filter'];
+	function DescriptionFilterFactory($filter) {
+    return function (items, searchTerm) {
+			// lowercase the inputs
+			items = $filter('lowercase')(items);
+			searchTerm = $filter('lowercase')(searchTerm);
+			// Apply the Array.prototype.filter() to filter the array to just the
+			// items where the description includes the provided searchTerm string
+			return items.filter(function (item) {
+				return item.description.includes(searchTerm);
+			});
+    };
+  }
 
 	/*
 		The controller should call the getMatchedMenuItems method when appropriate
@@ -49,15 +68,14 @@
 
 		};
 
-
 		search.remove = function(index) {
 			var removed = search.found.splice(index, 1);
 			console.log("Removed: " + removed[0].name);
 		};
   }
 
-	MenuSearchService.$inject = ['$http', 'ApiBasePath']
-  function MenuSearchService($http, ApiBasePath) {
+	MenuSearchService.$inject = ['$http', 'ApiBasePath', 'descriptionFilter']
+  function MenuSearchService($http, ApiBasePath, descriptionFilter) {
     var service = this;
 
     /*
@@ -73,17 +91,10 @@
         url: (ApiBasePath)
       }).then(function (result) {
 				var foundItems = [];
-				var allMenuItems = result.data.menu_items;
 
-				console.log("Retrieved " + allMenuItems.length + " menu items from the service.");
-
-				// process result and only keep items that match
-				for(var index in allMenuItems) {
-					var item = allMenuItems[index];
-					if(item.description.toLowerCase().includes(searchTerm.toLowerCase())) {
-						foundItems.push(item);
-					}
-				}
+				// Use the custom description filter to narrow down the array to just the items we want
+				foundItems = descriptionFilter(result.data.menu_items, searchTerm);
+				console.log("foundItems length: " + foundItems.length);
 
 		    // return processed items
 		    return foundItems;
