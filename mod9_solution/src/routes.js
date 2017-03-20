@@ -33,7 +33,7 @@
 
     // Items page
     .state('items', {
-      url: '/categories/{categoryShortName}',
+      url: '/items/{categoryShortName}',
       templateUrl: 'src/templates/items_view.template.html',
       controller: 'ItemsController as itemsView',
       resolve: {
