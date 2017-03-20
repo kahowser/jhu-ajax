@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" ng-app="MenuApp">
+  <head>
+    <title>Restaurant Menu</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+  </head>
+  <body>
+
+    <div class="container">
+      <ui-view></ui-view>
+    </div>
+
+    <!-- Libraries -->
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+
+    <!-- Modules -->
+    <script src="src/data.module.js"></script>
+    <script src="src/menuapp.module.js"></script>
+
+    <!-- Constants -->
+    <script src="src/menuapp.constants.js"></script>
+
+    <!-- Routes -->
+    <script src="src/routes.js"></script>
+
+    <!-- Components -->
+    <script src="src/categories.component.js"></script>
+    <script src="src/items.component.js"></script>
+
+    <!-- Controllers -->
+    <script src="src/categories.controller.js"></script>
+    <script src="src/items.controller.js"></script>
+
+    <!-- Servies -->
+    <script src="src/menudata.service.js"></script>
+
+  </body>
+</html>
