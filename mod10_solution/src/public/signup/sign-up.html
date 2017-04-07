@@ -1,0 +1,49 @@
+<div class="container">
+
+  <h2 class="text-center">Sign Up</h2>
+
+  <!-- Sign Up Form -->
+  <form name="signUpForm" ng-submit="signUpForm.$valid && signUpCtrl.signup(user)" novalidate>
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" class="form-control" name="firstName" ng-model="user.firstName" required>
+      <span ng-show="(signUpForm.firstName.$touched || signUpForm.$submitted ) && signUpForm.firstName.$invalid">Your first name is required.</span>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" class="form-control" name="lastName" ng-model="user.lastName" required>
+      <span ng-show="(signUpForm.lastName.$touched || signUpForm.$submitted ) && signUpForm.lastName.$invalid">Your last name is required.</span>
+    </div>
+    <div class="form-group">
+      <label for="emailAddress">Email Address:</label>
+      <input type="email" class="form-control" name="emailAddress" ng-model="user.emailAddress" required>
+      <span ng-show="(signUpForm.emailAddress.$touched || signUpForm.$submitted ) && signUpForm.emailAddress.$invalid">A valid email address is required.</span>
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number:</label>
+      <!--
+        The phone number provied must be 10 digits long. This is enforced by a regular expression inside the AngularJS ng-pattern.
+        The regular expression for the phone number allows first three digits to optionally be surrounded by parentheses.
+        If surrounded by parentheses, you can optionally have a space following that.
+        If no paraentheses, the first three digits can optionally be followed by a . or a -
+        Between the sixth and seventh digits, can optionally be by a . or a -
+      -->
+      <input type="text" class="form-control" name="phoneNumber" ng-model="user.phoneNumber" ng-pattern="/^((\(\d{3}\)(\040)?)|(\d{3})(-|\.)?)(\d{3})(-|\.)?(\d{4})$/" required>
+      <span ng-show="(signUpForm.phoneNumber.$touched || signUpForm.$submitted ) && signUpForm.phoneNumber.$invalid">A valid 10-digit phone number is required. Ex: 111-222-3333, or 111.222.3333, or (111) 222-3333, or 1112223333</span>
+    </div>
+    <div class="form-group">
+      <label for="favoriteDishName">Favorite Dish:</label>
+      <input type="text" class="form-control" name="favoriteDishName" ng-model="user.favoriteDishName" required>
+      <span ng-show="(signUpForm.favoriteDishName.$touched || signUpForm.$submitted ) && signUpForm.favoriteDishName.$invalid">Your favorite dish is required.</span>
+      <span ng-show="signUpCtrl.noMatchingItem">No such menu number exists.</span>
+    </div>
+    <input id="submit" type="submit" class="btn btn-default" value="Submit" />
+  </form>
+
+  <!-- Sucess Message -->
+  <div ng-show="signUpCtrl.saved">
+    <br>
+    <span>Your information has been saved.</span>
+  </div>
+
+</div>
