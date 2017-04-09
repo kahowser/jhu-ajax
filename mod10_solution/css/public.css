@@ -183,3 +183,12 @@ h3.menu-item-title {
     width: 100%;
   }
 }
+
+/********** Form Validation CSS **********/
+input.ng-valid {
+  border: 2px green solid;
+}
+
+input.ng-touched.ng-invalid {
+  border: 2px red solid;
+}
