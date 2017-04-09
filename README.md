@@ -11,4 +11,4 @@ This spring I am taking EN.605.787 Rich Internet Applications taught by [Yaakov 
 - [Module 7](https://kahowser.github.io/jhu-ajax/mod7_solution/)
 - [Module 8](https://kahowser.github.io/jhu-ajax/mod8_solution/)
 - [Module 9](https://kahowser.github.io/jhu-ajax/mod9_solution/)
-- [Module 10](https://kahowser.github.io/jhu-ajax/mod10_solution/)
+- [Module 10](https://kahowser.github.io/jhu-ajax/mod10_solution/) - [Jasmine Unit Tests](https://kahowser.github.io/jhu-ajax/mod10_solution/SpecRunner.html)
