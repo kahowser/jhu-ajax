@@ -4,27 +4,32 @@
 angular.module('public')
 .controller('SignUpController', SignUpController);
 
-SignUpController.$inject = ['InfoService', 'MenuService'];
-function SignUpController(InfoService, MenuService) {
+SignUpController.$inject = ['$scope', 'InfoService'];
+function SignUpController($scope, InfoService) {
   var $ctrl = this;
 
   $ctrl.signup = function(user) {
-    $ctrl.noMatchingItem = false;
-    var responsePromise = MenuService.getMenuItem(user.favoriteDishName);
+    // Retrieve the validated dish
+    var validatedDish = InfoService.getValidatedDish();
 
-    responsePromise.then(function (response) {
-      user.favoriteDish = response.data;
-      console.log("Found your favorite dish: " + user.favoriteDishName);
-      InfoService.saveMyInfo(user);
-      $ctrl.saved = true;
-      console.log("Your info has been saved.");
-    })
-    .catch(function (errorResponse) {
-      console.log("We could not find your favorite dish: " + user.favoriteDishName);
-      console.log("Error Code: " + errorResponse.status + " - " + errorResponse.statusText);
-      $ctrl.noMatchingItem = true;
-    });
+    if(validatedDish != null) {
+      // Set the user's favorite dish to the one we validated
+      user.favoriteDish = validatedDish;
+      // Save the user's info
+      $ctrl.saved = InfoService.saveMyInfo(user);
+      if($ctrl.saved) {
+        console.log("Your info has been saved.");
+        // Set back to pristine.
+        $scope.signUpForm.$setPristine();
+        // Set back to untouched state.
+        $scope.signUpForm.$setUntouched();
+      }
+    } else {
+      // Should never get here, can't signup if favorite dish is empty
+      console.log("You must select a favorite dish.");
+    }
   };
+
 }
 
 })();

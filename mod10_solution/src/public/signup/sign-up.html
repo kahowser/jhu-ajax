@@ -33,15 +33,18 @@
     </div>
     <div class="form-group">
       <label for="favoriteDishName">Favorite Dish:</label>
-      <input type="text" class="form-control" name="favoriteDishName" ng-model="user.favoriteDishName" required>
-      <span ng-show="(signUpForm.favoriteDishName.$touched || signUpForm.$submitted ) && signUpForm.favoriteDishName.$invalid">Your favorite dish is required.</span>
-      <span ng-show="signUpCtrl.noMatchingItem">No such menu number exists.</span>
+      <!-- Used a directive to handle the on-blur validation, once validated the validated dish object is stored in the info service. On save, the validated dish is stored to the user object. -->
+      <input validate-dish type="text" class="form-control" name="favoriteDishName" ng-model="user.favoriteDishName" required>
+      <div ng-show="signUpForm.$submitted || signUpForm.favoriteDishName.$touched">
+        <span ng-show="signUpForm.favoriteDishName.$error.required">Your favorite dish is required.</span>
+        <span ng-show="signUpForm.favoriteDishName.$error.exists">No such menu number exists.</span>
+      </div>
     </div>
     <input id="submit" type="submit" class="btn btn-default" value="Submit" />
   </form>
 
-  <!-- Sucess Message -->
-  <div ng-show="signUpCtrl.saved">
+  <!-- Success message, if the form has changed remove the success message -->
+  <div ng-show="signUpCtrl.saved && signUpForm.$pristine">
     <br>
     <span>Your information has been saved.</span>
   </div>
