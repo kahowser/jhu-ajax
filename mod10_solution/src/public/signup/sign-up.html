@@ -3,23 +3,23 @@
   <h2 class="text-center">Sign Up</h2>
 
   <!-- Sign Up Form -->
-  <form name="signUpForm" ng-submit="signUpForm.$valid && signUpCtrl.signup(user)" novalidate>
+  <form name="signUpCtrl.signUpForm" ng-submit="signUpCtrl.signUpForm.$valid && signUpCtrl.signup(user)" novalidate>
     <div class="form-group">
       <label for="firstName">First Name:</label>
       <input type="text" class="form-control" name="firstName" ng-model="user.firstName" required>
-      <span ng-show="(signUpForm.firstName.$touched || signUpForm.$submitted ) && signUpForm.firstName.$invalid">Your first name is required.</span>
+      <span ng-show="(signUpCtrl.signUpForm.firstName.$touched || signUpCtrl.signUpForm.$submitted ) && signUpCtrl.signUpForm.firstName.$invalid">Your first name is required.</span>
     </div>
     <div class="form-group">
       <label for="lastName">Last Name:</label>
       <input type="text" class="form-control" name="lastName" ng-model="user.lastName" required>
-      <span ng-show="(signUpForm.lastName.$touched || signUpForm.$submitted ) && signUpForm.lastName.$invalid">Your last name is required.</span>
+      <span ng-show="(signUpCtrl.signUpForm.lastName.$touched || signUpCtrl.signUpForm.$submitted ) && signUpCtrl.signUpForm.lastName.$invalid">Your last name is required.</span>
     </div>
     <div class="form-group">
       <label for="emailAddress">Email Address:</label>
       <input type="email" class="form-control" name="emailAddress" ng-model="user.emailAddress" required>
-      <div ng-show="signUpForm.$submitted || signUpForm.emailAddress.$touched">
-        <span ng-show="signUpForm.emailAddress.$error.required">Your email address is required.</span>
-        <span ng-show="signUpForm.emailAddress.$error.email">The email address you entered is invalid.</span>
+      <div ng-show="signUpCtrl.signUpForm.$submitted || signUpCtrl.signUpForm.emailAddress.$touched">
+        <span ng-show="signUpCtrl.signUpForm.emailAddress.$error.required">Your email address is required.</span>
+        <span ng-show="signUpCtrl.signUpForm.emailAddress.$error.email">The email address you entered is invalid.</span>
       </div>
     </div>
     <div class="form-group">
@@ -32,25 +32,25 @@
         Between the sixth and seventh digits, can optionally be by a . or a -
       -->
       <input type="text" class="form-control" name="phoneNumber" ng-model="user.phoneNumber" ng-pattern="/^((\(\d{3}\)(\040)?)|(\d{3})(-|\.)?)(\d{3})(-|\.)?(\d{4})$/" required>
-      <div ng-show="signUpForm.$submitted || signUpForm.phoneNumber.$touched">
-        <span ng-show="signUpForm.phoneNumber.$error.required">Your phone number is required.</span>
-        <span ng-show="signUpForm.phoneNumber.$error.pattern">The phone number you entered is invalid. Valid formats include: 111-222-3333, 111.222.3333, (111) 222-3333, or 1112223333 </span>
+      <div ng-show="signUpCtrl.signUpForm.$submitted || signUpCtrl.signUpForm.phoneNumber.$touched">
+        <span ng-show="signUpCtrl.signUpForm.phoneNumber.$error.required">Your phone number is required.</span>
+        <span ng-show="signUpCtrl.signUpForm.phoneNumber.$error.pattern">The phone number you entered is invalid. Valid formats include: 111-222-3333, 111.222.3333, (111) 222-3333, or 1112223333 </span>
       </div>
     </div>
     <div class="form-group">
       <label for="favoriteDishName">Favorite Dish:</label>
       <!-- Used a directive to handle the on-blur validation, once validated the validated dish object is stored in the info service. On save, the validated dish is stored to the user object. -->
       <input validate-dish type="text" class="form-control" name="favoriteDishName" ng-model="user.favoriteDishName" required>
-      <div ng-show="signUpForm.$submitted || signUpForm.favoriteDishName.$touched">
-        <span ng-show="signUpForm.favoriteDishName.$error.required">Your favorite dish is required.</span>
-        <span ng-show="signUpForm.favoriteDishName.$error.exists">No such menu number exists.</span>
+      <div ng-show="signUpCtrl.signUpForm.$submitted || signUpCtrl.signUpForm.favoriteDishName.$touched">
+        <span ng-show="signUpCtrl.signUpForm.favoriteDishName.$error.required">Your favorite dish is required.</span>
+        <span ng-show="signUpCtrl.signUpForm.favoriteDishName.$error.exists">No such menu number exists.</span>
       </div>
     </div>
-    <input id="submit" type="submit" class="btn btn-default" value="Submit" ng-disabled="signUpForm.$invalid" />
+    <input id="submit" type="submit" class="btn btn-default" value="Submit" ng-disabled="signUpCtrl.signUpForm.$invalid" />
   </form>
 
   <!-- Success message, if the form has changed remove the success message -->
-  <div ng-show="signUpCtrl.saved && signUpForm.$pristine">
+  <div ng-show="signUpCtrl.saved && signUpCtrl.signUpForm.$pristine">
     <br>
     <span>Your information has been saved.</span>
   </div>

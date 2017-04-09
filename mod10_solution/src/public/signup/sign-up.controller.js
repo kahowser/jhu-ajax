@@ -4,8 +4,8 @@
 angular.module('public')
 .controller('SignUpController', SignUpController);
 
-SignUpController.$inject = ['$scope', 'InfoService'];
-function SignUpController($scope, InfoService) {
+SignUpController.$inject = ['InfoService'];
+function SignUpController(InfoService) {
   var $ctrl = this;
 
   $ctrl.signup = function(user) {
@@ -20,9 +20,9 @@ function SignUpController($scope, InfoService) {
       if($ctrl.saved) {
         console.log("Your info has been saved.");
         // Set back to pristine.
-        $scope.signUpForm.$setPristine();
+        $ctrl.signUpForm.$setPristine();
         // Set back to untouched state.
-        $scope.signUpForm.$setUntouched();
+        $ctrl.signUpForm.$setUntouched();
       }
     } else {
       // Should never get here, can't signup if favorite dish is empty
