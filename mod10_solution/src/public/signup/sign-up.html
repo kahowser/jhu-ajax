@@ -17,7 +17,10 @@
     <div class="form-group">
       <label for="emailAddress">Email Address:</label>
       <input type="email" class="form-control" name="emailAddress" ng-model="user.emailAddress" required>
-      <span ng-show="(signUpForm.emailAddress.$touched || signUpForm.$submitted ) && signUpForm.emailAddress.$invalid">A valid email address is required.</span>
+      <div ng-show="signUpForm.$submitted || signUpForm.emailAddress.$touched">
+        <span ng-show="signUpForm.emailAddress.$error.required">Your email address is required.</span>
+        <span ng-show="signUpForm.emailAddress.$error.email">The email address you entered is invalid.</span>
+      </div>
     </div>
     <div class="form-group">
       <label for="phoneNumber">Phone Number:</label>
@@ -29,7 +32,10 @@
         Between the sixth and seventh digits, can optionally be by a . or a -
       -->
       <input type="text" class="form-control" name="phoneNumber" ng-model="user.phoneNumber" ng-pattern="/^((\(\d{3}\)(\040)?)|(\d{3})(-|\.)?)(\d{3})(-|\.)?(\d{4})$/" required>
-      <span ng-show="(signUpForm.phoneNumber.$touched || signUpForm.$submitted ) && signUpForm.phoneNumber.$invalid">A valid 10-digit phone number is required. Ex: 111-222-3333, or 111.222.3333, or (111) 222-3333, or 1112223333</span>
+      <div ng-show="signUpForm.$submitted || signUpForm.phoneNumber.$touched">
+        <span ng-show="signUpForm.phoneNumber.$error.required">Your phone number is required.</span>
+        <span ng-show="signUpForm.phoneNumber.$error.pattern">The phone number you entered is invalid. Valid formats include: 111-222-3333, 111.222.3333, (111) 222-3333, or 1112223333 </span>
+      </div>
     </div>
     <div class="form-group">
       <label for="favoriteDishName">Favorite Dish:</label>
